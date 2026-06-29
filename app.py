@@ -2,6 +2,7 @@ import streamlit as st
 import data_fetch
 import model
 import importlib
+import os
 
 importlib.reload(data_fetch)
 importlib.reload(model)
@@ -38,7 +39,7 @@ with center:
     with st.container(border=True):
 
         st.subheader("Enter Stock Details")
-        
+
         stock_input = st.text_input(
             "Stock Symbol",
             placeholder="AAPL, TSLA, MSFT..."
@@ -66,6 +67,9 @@ with center:
                         value=f"${prediction:.2f}"
                     )
                     st.success("Prediction completed successfully.")
+
+                    if os.path.exists(csv_file):
+                        os.remove(csv_file)
 
                 except Exception as e:
                     st.error(f"Error: {e}")
